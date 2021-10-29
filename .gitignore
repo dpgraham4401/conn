@@ -1,4 +1,5 @@
 *.txt
+*.xlsx
 venv
 __pycache__
 *egg-info
@@ -6,3 +7,6 @@ __pycache__
 # C extensions
 *.so
 *.out
+
+# config files
+*.ini
