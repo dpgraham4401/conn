@@ -1,6 +1,8 @@
 *.txt
 *.xlsx
+*.csv
 venv
+env
 __pycache__
 *egg-info
 

@@ -2,11 +2,12 @@
 import configparser
 from pathlib import Path
 import sys
+import domain
 
 
 def run(config_path):
     """Initiate conn"""
-    print("You have the conn")
+    print("Conn started: You have the conn")
     read_config(config_path)
 
 
