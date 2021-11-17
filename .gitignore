@@ -2,7 +2,7 @@
 *.xlsx
 *.csv
 venv
-env
+.env
 __pycache__
 *egg-info
 
@@ -12,3 +12,4 @@ __pycache__
 
 # config files
 *.ini
+.vscode
