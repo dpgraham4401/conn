@@ -5,6 +5,7 @@ high level functionality related to pulling data from https://rcraquery.epa.gov
 """
 
 from src.meta.auth import token
+from src.meta.query import query
 
 def run_meta(args):
     if args.auth:

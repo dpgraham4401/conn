@@ -4,6 +4,9 @@ entry point for starship enterprise
 import sys
 import argparse
 from src.meta.meta import run_meta
+# from src.conn import disply_version
+
+__version__ = '0.0.1'
 
 def main():
     """
@@ -11,7 +14,7 @@ def main():
     """
     parser = argparse.ArgumentParser(description="CLI automation goodness for e-Manifest tasks")
 
-    parser.add_argument('-v','--version', help='Display version number and quit')
+    parser.add_argument('-v','--version', action='version', version="%(prog)s "+__version__+"")
 
     # breakdown the functionality in subcommands 
     subparsers = parser.add_subparsers(dest='sub_cmd', help='conn provides the below subcommands')
@@ -32,8 +35,8 @@ def main():
 
     args = parser.parse_args()
 
-    if args.version:
-        print("placeholder")
+    # if args.version:
+        # disply_version()
     if args.sub_cmd == "meta":
         run_meta(args)
 
