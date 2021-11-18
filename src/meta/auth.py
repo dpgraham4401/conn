@@ -7,8 +7,8 @@ authorization for https://rcraquery.epa.gov
 from datetime import datetime, timedelta
 import os
 import sys
-import json
-import requests
+ifmport json
+import request
 from dotenv import load_dotenv
 
 BASE_URL = 'https://rcraquery.epa.gov/metabase'
@@ -52,7 +52,7 @@ def __get_token():
     passwd = os.getenv('META_PASSWD')
     meta_data = json.dumps({'username': user, 'password': passwd})
     meta_head = {'Content-Type': 'application/json'}
-    res = requests.post(AUTH_URL, data=meta_data, headers=meta_head)
+    res = request.post(AUTH_URL, data=meta_data, headers=meta_head)
     data = res.json()
 
     token_exp = datetime.now() + timedelta(days=EXPIR_DAYS)

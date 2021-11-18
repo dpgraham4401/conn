@@ -6,24 +6,32 @@ import argparse
 
 def main():
     """
-    Parse command line arguemtns and start
+    Parse command line argument and start
     """
     parser = argparse.ArgumentParser(description="CLI automation goodness for e-Manifest task")
-    parser.add_argument('verb',
-                        help='path to the file',
-                        choices=['meta', 'test' ],)
-    parser.add_argument('--display', '-d',
-                        help='Display parsed info',
-                        choices=['contacts', 'stats' ],
-                        action='store')
+
+    parser.add_argument('-v','--version', help='Display version number and quit')
+
+    # breakdown the functionality in subcommands 
+    subparsers = parser.add_subparsers(dest='sub_cmd', help='conn provides the below subcommands')
+
+    parser_meta = subparsers.add_parser('meta', help='Pull data from Metabase')
+    parser_meta.add_argument('query', help='Pull query results from metabase')
+    parser_meta.add_argument('--card', help='query number to pull')
+
+    parser_meta = subparsers.add_parser('excel', help='Work with excel and cvs')
+    parser_meta.add_argument('read', help='Pull query results from metabase')
+    parser_meta.add_argument('--sheet', help='query number to pull')
+
     args = parser.parse_args()
     
-    # test
-    if args.verb == "meta":
-        print("meta")
-    elif args.verb == "test":
-        print("test!")
-    
+
+    if args.sub_cmd:
+        print("meta!")
+    if args.query:
+        print("  |")
+        print("  __query!")
+
 
 if __name__ == '__main__':
     try:
@@ -31,3 +39,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\ninterrupted.")
         sys.exit(1)
+
