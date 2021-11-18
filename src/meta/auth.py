@@ -7,8 +7,8 @@ authorization for https://rcraquery.epa.gov
 from datetime import datetime, timedelta
 import os
 import sys
-ifmport json
-import request
+import json
+import requests
 from dotenv import load_dotenv
 
 BASE_URL = 'https://rcraquery.epa.gov/metabase'
@@ -18,15 +18,21 @@ EXPIR_DAYS = 12
 
 def token():
     """logic for if new token needed and local storage"""
-    try:
-        file = open(".env")
-        file.close()
-    except IOError as err:
-        print(err)
-        sys.exit("'.env' file with credentials cannot be opened")
+    load_dotenv()
+    # try:
+    #     file = open(".env")
+    #     if file
+    #     file.close()
+    # except IOError as err:
+    #     print(err)
+    #     sys.exit("'.env' file with credentials cannot be opened")
     try:
         if not os.getenv('META_TOKEN'):
-            print("Token: no token present, retireving")
+            print("Token: no token present")
+            if not os.path.exists('.env'):
+                print("no .env file found")
+                os.environ['META_USER'] = input("Metabase username: ")
+                os.environ['META_PASSWD'] = input("Metabase password: ")
             token_obj = __get_token()
             __write_token(token_obj)
         elif os.getenv('TOKEN_EXP'):
@@ -52,7 +58,7 @@ def __get_token():
     passwd = os.getenv('META_PASSWD')
     meta_data = json.dumps({'username': user, 'password': passwd})
     meta_head = {'Content-Type': 'application/json'}
-    res = request.post(AUTH_URL, data=meta_data, headers=meta_head)
+    res = requests.post(AUTH_URL, data=meta_data, headers=meta_head)
     data = res.json()
 
     token_exp = datetime.now() + timedelta(days=EXPIR_DAYS)
