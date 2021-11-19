@@ -6,9 +6,15 @@ high level functionality related to pulling data from https://rcraquery.epa.gov
 
 from src.meta.auth import token
 from src.meta.query import query
+import json
 
 def run_meta(args):
+    """Metabase related logic"""
     if args.auth:
         token()
     elif args.query:
-        query(args.query, args.format)
+        token()
+        res = query(args.query, args.format)
+        for i in res:
+            print(i)
+

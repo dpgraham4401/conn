@@ -4,40 +4,53 @@ The warp drive (conn's high level functionality and CLI)
 @author: dpgraham4401
 """
 
-# import sys
 import argparse
 from src.meta.meta import run_meta
-# from src.conn import disply_version
 
+# Todo: automatically update version
 __version__ = '0.0.1'
+
+# Todo: add CLI defaults
 
 def main():
     """
-    Parse command line argument and start
+    The starting point
     """
-    parser = argparse.ArgumentParser(description="CLI automation goodness for e-Manifest tasks")
-
-    parser.add_argument('-v','--version', action='version', version="%(prog)s "+__version__+"")
-
-    # breakdown the functionality in subcommands 
-    subparsers = parser.add_subparsers(dest='sub_cmd', help='conn provides the below subcommands')
-
-    parser_meta = subparsers.add_parser('meta', help='Pull data from Metabase, defaults to authorize')
-    # parser_meta.add_argument('--query', 
-    #                         help='Pull query results from metabase')
-    parser_meta.add_argument('--auth', 
-                            action='store_true',
-                            help='authorize your metabase account')
-    # parser_meta.add_argument('--card',
-    #                         # dest='meta_cmd',
-    #                         help='query number to pull')
-
-    parser_meta = subparsers.add_parser('excel', help='Work with excel and cvs')
-    parser_meta.add_argument('read', help='Pull query results from metabase')
-    parser_meta.add_argument('--sheet', help='query number to pull')
-
-    args = parser.parse_args()
+    args = conn_cli()
 
     if args.sub_cmd == "meta":
         run_meta(args)
 
+
+def conn_cli():
+    """ Conn's command line interface for conn """
+    # Top level: --version, --help, sub commands
+    parser = argparse.ArgumentParser(description="CLI automation goodness for e-Manifest tasks")
+    parser.add_argument('-v','--version', action='version', version="%(prog)s "+__version__+"")
+    
+    subparsers = parser.add_subparsers(dest='sub_cmd', help='conn provides the below subcommands')
+
+    # Conn subcomands (meta, excel, [email])
+    parser_meta = subparsers.add_parser('meta', help='Pull data from Metabase, defaults to authorize')
+    parser_excel = subparsers.add_parser('excel', help='Work with excel and cvs')
+    # Todo: subcommand utilities for email, RCRAInfo API
+
+    # Meta subcommands and options
+    parser_meta.add_argument('--auth', 
+                            action='store_true',
+                            help='authorize your metabase account')
+    parser_meta.add_argument('--query',
+                            action='store',
+                            help='Pull query results from metabase')
+    parser_meta.add_argument('--format',
+                            action='store',
+                            help='Specific CSV or JSON format')
+    parser_meta.add_argument('--save',
+                            action='store',
+                            help='Specific CSV or JSON format')
+
+    parser_excel.add_argument('-read', help='read data into pandas dataframe')
+    parser_excel.add_argument('-sheet', help='sheet name or number (zero indexed)')
+
+    args = parser.parse_args()
+    return args

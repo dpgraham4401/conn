@@ -1,6 +1,7 @@
 *.txt
 *.xlsx
 *.csv
+*.json
 venv
 .env
 __pycache__

@@ -6,6 +6,7 @@ pulling data from https://rcraquery.epa.gov
 
 import os
 import requests
+import json
 
 BASE_URL = 'https://rcraquery.epa.gov/metabase'
 
@@ -23,11 +24,17 @@ def get_cards(card_type):
 
 def query(card_id, export_frmt):
     """GET metabase card"""
-    auth_url = BASE_URL + '/api/card/' + card_id + '/query/' + export_frmt
-    print(auth_url)
+    if export_frmt:
+        query_url = BASE_URL + '/api/card/' + card_id + '/query/' + export_frmt
+    else:
+        query_url = BASE_URL + '/api/card/' + card_id + '/query'
+    # print(auth_url)
     token_id = os.getenv('META_TOKEN')
     meta_head = {'Content-Type': 'application/json',
                  'X-Metabase-Session': token_id}
-    res = requests.post(auth_url, headers=meta_head)
-    res = res.json()
+    res = requests.post(query_url, headers=meta_head)
+    if export_frmt.upper() == "JSON":
+        res = res.json()
+        with open('test.json', 'w') as f:
+            json.dump(res, f)
     return res
