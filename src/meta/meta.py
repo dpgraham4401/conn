@@ -11,4 +11,4 @@ def run_meta(args):
     if args.auth:
         token()
     elif args.query:
-        query()
+        query(args.query, args.format)
