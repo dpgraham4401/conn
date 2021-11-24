@@ -39,11 +39,11 @@ def token():
             current_time = datetime.now()
             current_time = current_time.isoformat()
             if os.getenv('TOKEN_EXP') < current_time:
-                print("Token: expired, retrieving new token")
+                print("Token status: expired, retrieving new token")
                 token_obj = __get_token()
                 __write_token(token_obj)
             elif os.getenv('TOKEN_EXP') >= current_time:
-                print("Token: Good")
+                print("Token status: Good")
             else:
                 print("Token error: hmmm something ain't right, "
                       "contact support")

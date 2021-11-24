@@ -36,18 +36,26 @@ def conn_cli():
     # Todo: subcommand utilities for email, RCRAInfo API
 
     # Meta subcommands and options
-    parser_meta.add_argument('--auth', 
+    group_meta = parser_meta.add_mutually_exclusive_group()
+    group_meta.add_argument('-a','--auth', 
                             action='store_true',
                             help='authorize your metabase account')
-    parser_meta.add_argument('--query',
+    group_meta.add_argument('-q','--query',
                             action='store',
-                            help='Pull query results from metabase')
-    parser_meta.add_argument('--format',
+                            help='metabase query number to pull results from')
+    # parser_meta.add_argument('-a','--auth', 
+                            # action='store_true',
+                            # help='authorize your metabase account')
+    # parser_meta.add_argument('--query',
+                            # action='store',
+                            # help='Pull query results from metabase')
+    # parser_meta.add_argument('--format',
+    #                         action='store',
+    #                         help='Specific CSV or JSON format')
+    parser_meta.add_argument('-o', '--output',
+                            default='./domm_output.json',
                             action='store',
-                            help='Specific CSV or JSON format')
-    parser_meta.add_argument('--save',
-                            action='store',
-                            help='Specific CSV or JSON format')
+                            help='specify .csv or .json output, defaults to "./domm_output.json"')
 
     parser_excel.add_argument('-read', help='read data into pandas dataframe')
     parser_excel.add_argument('-sheet', help='sheet name or number (zero indexed)')
