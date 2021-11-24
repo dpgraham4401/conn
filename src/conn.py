@@ -5,6 +5,8 @@ The warp drive (conn's high level functionality and CLI)
 """
 
 import argparse
+import sys
+import os
 from src.meta.meta import run_meta
 
 # Todo: automatically update version
@@ -17,6 +19,7 @@ def main():
     The starting point
     """
     args = conn_cli()
+    print("hello from conn.main")
 
     if args.sub_cmd == "meta":
         run_meta(args)

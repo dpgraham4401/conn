@@ -2,10 +2,11 @@
 *.xlsx
 *.csv
 *.json
-venv
+venv/
 .env
 __pycache__
 *egg-info
+build/
 
 # C extensions
 *.so

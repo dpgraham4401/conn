@@ -8,8 +8,6 @@ import os
 import sys
 import requests
 import json
-import csv
-import ast
 
 BASE_URL = 'https://rcraquery.epa.gov/metabase'
 

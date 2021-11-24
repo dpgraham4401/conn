@@ -19,13 +19,6 @@ EXPIR_DAYS = 12
 def token():
     """logic for if new token needed and local storage"""
     load_dotenv()
-    # try:
-    #     file = open(".env")
-    #     if file
-    #     file.close()
-    # except IOError as err:
-    #     print(err)
-    #     sys.exit("'.env' file with credentials cannot be opened")
     try:
         if not os.getenv('META_TOKEN'):
             print("Token: no token present")
