@@ -1,5 +1,5 @@
 """
-src/meta.py
+conn/meta.py
 authorization for https://rcraquery.epa.gov
 @author: dpgraham4401
 """

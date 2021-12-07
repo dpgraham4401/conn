@@ -4,8 +4,8 @@ entry point for starship enterprise
 @author dpgraham4401
 """
 import sys
-from src.conn import main
-import os
+from conn.conn import main
+# import os
 
 # sys.path.append(os.path.join(os.path.dirname(__file__), "meta"))
 

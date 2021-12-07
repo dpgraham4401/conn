@@ -1,12 +1,12 @@
 """
-src/meta.py
+conn/meta.py
 high level functionality related to pulling data from https://rcraquery.epa.gov
 @author: dpgraham4401
 """
 
-from src.meta.auth import token
-from src.meta.query import query
-from src.meta.query import save_output
+from conn.meta.auth import token
+from conn.meta.query import query
+from conn.meta.query import save_output
 
 
 def run_meta(args):
@@ -15,8 +15,9 @@ def run_meta(args):
         token()
     elif args.query:
         token()
-        res = query(args.query, args.output)
-        if res.status_code == 200:
+        # res = query(args.query, args.output)
+        res = query(args)
+        if res.status_code == 200 or 202:
             if args.output:
                 print("Saving data")
                 save_output(res, args.output)

@@ -1,5 +1,5 @@
 """
-src/conn.py
+conn/conn.py
 The warp drive (conn's high level functionality and CLI)
 @author: dpgraham4401
 """
@@ -7,7 +7,7 @@ The warp drive (conn's high level functionality and CLI)
 import argparse
 import sys
 import os
-from src.meta.meta import run_meta
+from conn.meta.meta import run_meta
 
 # Todo: automatically update version
 __version__ = '0.0.1'
@@ -46,15 +46,9 @@ def conn_cli():
     group_meta.add_argument('-q','--query',
                             action='store',
                             help='metabase query number to pull results from')
-    # parser_meta.add_argument('-a','--auth', 
-                            # action='store_true',
-                            # help='authorize your metabase account')
-    # parser_meta.add_argument('--query',
-                            # action='store',
-                            # help='Pull query results from metabase')
-    # parser_meta.add_argument('--format',
-    #                         action='store',
-    #                         help='Specific CSV or JSON format')
+    parser_meta.add_argument('-p','--parameter', 
+                            action='store',
+                            help='parameter for query')
     parser_meta.add_argument('-o', '--output',
                             default='./domm_output.json',
                             action='store',
