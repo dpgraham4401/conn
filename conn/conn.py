@@ -6,23 +6,23 @@ The warp drive (conn's high level functionality and CLI)
 
 import argparse
 import sys
-import os
+from conn.email.outlook import run_who
 from conn.meta.meta import run_meta
 
 # Todo: automatically update version
 __version__ = '0.0.1'
 
-# Todo: add CLI defaults
 
 def main():
     """
     The starting point
     """
     args = conn_cli()
-    print("hello from conn.main")
 
     if args.sub_cmd == "meta":
         run_meta(args)
+    elif args.sub_cmd == "who":
+        run_who(args)
 
 
 def conn_cli():
@@ -33,9 +33,12 @@ def conn_cli():
     
     subparsers = parser.add_subparsers(dest='sub_cmd', help='conn provides the below subcommands')
 
-    # Conn subcomands (meta, excel, [email])
+    # Conn subcomands (meta, excel, email)
     parser_meta = subparsers.add_parser('meta', help='Pull data from Metabase, defaults to authorize')
     parser_excel = subparsers.add_parser('excel', help='Work with excel and cvs')
+    parser_email = subparsers.add_parser('email', help='send emails')
+    if "who" in sys.argv:
+        parser_conn = subparsers.add_parser('who', help='who has the conn?')
     # Todo: subcommand utilities for email, RCRAInfo API
 
     # Meta subcommands and options
@@ -54,8 +57,13 @@ def conn_cli():
                             action='store',
                             help='specify .csv or .json output, defaults to "./conn_output.json"')
 
+    # Excel subcommands and options
     parser_excel.add_argument('-read', help='read data into pandas dataframe')
     parser_excel.add_argument('-sheet', help='sheet name or number (zero indexed)')
+    
+    # Email subcommands and options
+    parser_email.add_argument('--test', help='test emaail and pywin32')
+    parser_conn.add_argument('-u', help='who has the conn')
 
     args = parser.parse_args()
     return args
