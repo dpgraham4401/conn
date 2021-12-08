@@ -13,6 +13,7 @@ BASE_URL = 'https://rcraquery.epa.gov/metabase'
 
 
 def get_export_fmt(output_path):
+    """determine is json or csv format"""
     if 'csv' in output_path:
         return 'csv'
     elif 'json' in output_path:
@@ -43,23 +44,20 @@ def set_query_headers():
 
 def parse_params(args):
     """convert CLI parameters to payload"""
-    # template parameters to pass to requests
+    # ToDo: remove url encoded hardcode
     # params = {"ignore_cache":True,
     #     "parameters":[{
     #         "type":"category",
     #         "target":["variable",["template-tag","id_var"]],
     #         "value":"ILD021160189"}]}
-    if isinstance(args.parameter, str):
-        metabase_var = args.parameter.split('=')
-    params = {
-        'ignore_cache':True,
-    }
-    params['parameters'] = [{
-            "type":"category",
-            "target":["variable",["template-tag",metabase_var[0]]],
-            "value":metabase_var[1]}]
-    params = json.dumps(params)
-    return params
+    if args.parameter:
+        if isinstance(args.parameter, str):
+            metabase_var = args.parameter.split('=')
+        params = "?parameters=%5B%7B%22type%22%3A%22category%22%2C%22target%22%3A%5B%22variable%22%2C%5B%22template-tag%22%2C%22" + metabase_var[0] + "%22%5D%5D%2C%22value%22%3A%22" + metabase_var[1] + "%22%7D%5D"
+        return params
+    else:
+        params = ""
+        return params
 
 
 def query(args):
@@ -68,11 +66,7 @@ def query(args):
     output_path = args.output
     meta_head = set_query_headers()
     out_format = get_export_fmt(output_path)
-    if args.parameter:
-        params = parse_params(args)
-        query_url = BASE_URL + "/api/card/" + card_id + "/query"
-        res = requests.post(query_url, data=params, headers=meta_head)
-    else:
-        query_url = BASE_URL + "/api/card/" + card_id + "/query/" + out_format
-        res = requests.post(query_url, headers=meta_head)
-    return res
+    params = parse_params(args)
+    query_url = BASE_URL + "/api/card/" + card_id + "/query/" + out_format + params
+    resp = requests.post(query_url, headers=meta_head)
+    return resp

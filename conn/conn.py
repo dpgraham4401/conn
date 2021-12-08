@@ -50,9 +50,9 @@ def conn_cli():
                             action='store',
                             help='parameter for query')
     parser_meta.add_argument('-o', '--output',
-                            default='./domm_output.json',
+                            default='./conn_output.json',
                             action='store',
-                            help='specify .csv or .json output, defaults to "./domm_output.json"')
+                            help='specify .csv or .json output, defaults to "./conn_output.json"')
 
     parser_excel.add_argument('-read', help='read data into pandas dataframe')
     parser_excel.add_argument('-sheet', help='sheet name or number (zero indexed)')
